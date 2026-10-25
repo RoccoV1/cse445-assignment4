@@ -8,7 +8,6 @@ namespace ConsoleApp1
 {
     public class Submission
     {
-        // These URLs are read by the autograder. Keep the variable names unchanged.
         public static string xmlURL = "https://raw.githubusercontent.com/RoccoV1/cse445-assignment4/main/NationalParks.xml";
         public static string xmlErrorURL = "https://raw.githubusercontent.com/RoccoV1/cse445-assignment4/main/NationalParksErrors.xml";
         public static string xsdURL = "https://raw.githubusercontent.com/RoccoV1/cse445-assignment4/main/NationalParks.xsd";
@@ -25,10 +24,6 @@ namespace ConsoleApp1
             Console.WriteLine(result);
         }
 
-        // Q2.1
-        // Downloads an XML document and its XSD schema, validates the XML against
-        // the schema, and returns "No errors are found" when validation succeeds.
-        // If validation or XML parsing fails, available error information is returned.
         public static string Verification(string xmlUrl, string xsdUrl)
         {
             string xmlText = DownloadContent(xmlUrl);
@@ -58,10 +53,7 @@ namespace ConsoleApp1
                 using (StringReader xmlString = new StringReader(xmlText))
                 using (XmlReader reader = XmlReader.Create(xmlString, settings))
                 {
-                    while (reader.Read())
-                    {
-                        // Reading the full document triggers all schema validation events.
-                    }
+                    while (reader.Read()) { }
                 }
             }
             catch (Exception ex)
@@ -78,21 +70,14 @@ namespace ConsoleApp1
             return errors.ToString().Trim();
         }
 
-        // Q2.2
-        // Converts the downloaded valid XML document to JSON. Json.NET represents
-        // XML attributes using @AttributeName, matching the assignment format.
         public static string Xml2Json(string xmlUrl)
         {
             string xmlText = DownloadContent(xmlUrl);
-
             XmlDocument document = new XmlDocument();
             document.LoadXml(xmlText);
-
-            string jsonText = JsonConvert.SerializeXmlNode(document, Formatting.Indented);
-            return jsonText;
+            return JsonConvert.SerializeXmlNode(document, Formatting.Indented);
         }
 
-        // Helper method used by both required methods to read a public URL.
         private static string DownloadContent(string url)
         {
             using (System.Net.WebClient client = new System.Net.WebClient())
