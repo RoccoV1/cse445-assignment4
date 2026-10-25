@@ -75,7 +75,7 @@ namespace ConsoleApp1
             string xmlText = DownloadContent(xmlUrl);
             XmlDocument document = new XmlDocument();
             document.LoadXml(xmlText);
-            return JsonConvert.SerializeXmlNode(document, Formatting.Indented);
+            return JsonConvert.SerializeXmlNode(document, Newtonsoft.Json.Formatting.Indented);
         }
 
         private static string DownloadContent(string url)
